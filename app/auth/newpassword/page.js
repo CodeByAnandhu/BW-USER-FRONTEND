@@ -1,23 +1,25 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { auth } from '@/app/lib/api';
- 
+
 const NewPasswordPage = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
 
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const emailParam = searchParams.get('email');
+    // Get the email from the URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const emailParam = urlParams.get('email');
+    console.log("emailParam",emailParam);
     if (emailParam) {
       setEmail(emailParam);
     }
-  }, [searchParams]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
